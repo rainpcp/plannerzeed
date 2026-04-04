@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ethereal Chronos - ปฏิทิน</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #192540;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#000000",
+                      "secondary-container": "#5516be",
+                      "secondary": "#ac8aff",
+                      "on-tertiary": "#005464",
+                      "on-background": "#dee5ff",
+                      "surface-dim": "#060e20",
+                      "inverse-surface": "#faf8ff",
+                      "primary-dim": "#699cff",
+                      "outline": "#6d758c",
+                      "error-dim": "#d7383b",
+                      "on-surface": "#dee5ff",
+                      "on-tertiary-container": "#004b58",
+                      "inverse-primary": "#005bc4",
+                      "on-primary": "#002c66",
+                      "primary-container": "#6e9fff",
+                      "primary-fixed": "#6e9fff",
+                      "tertiary-container": "#53ddfc",
+                      "surface-container-low": "#091328",
+                      "tertiary": "#8ce7ff",
+                      "on-primary-fixed-variant": "#002a62",
+                      "surface-variant": "#192540",
+                      "on-tertiary-fixed-variant": "#005564",
+                      "secondary-fixed": "#dac9ff",
+                      "error": "#ff716c",
+                      "on-secondary": "#280067",
+                      "surface-container-high": "#141f38",
+                      "tertiary-fixed-dim": "#40ceed",
+                      "on-secondary-container": "#d9c8ff",
+                      "secondary-dim": "#8455ef",
+                      "on-primary-fixed": "#000000",
+                      "surface": "#060e20",
+                      "inverse-on-surface": "#4d556b",
+                      "on-surface-variant": "#a3aac4",
+                      "on-secondary-fixed-variant": "#5f28c8",
+                      "on-secondary-fixed": "#40009b",
+                      "secondary-fixed-dim": "#ceb9ff",
+                      "on-tertiary-fixed": "#003640",
+                      "error-container": "#9f0519",
+                      "surface-container-highest": "#192540",
+                      "surface-bright": "#1f2b49",
+                      "on-error": "#490006",
+                      "background": "#060e20",
+                      "on-error-container": "#ffa8a3",
+                      "primary-fixed-dim": "#5391ff",
+                      "on-primary-container": "#002150",
+                      "primary": "#85adff",
+                      "outline-variant": "#40485d",
+                      "tertiary-dim": "#40ceed",
+                      "surface-tint": "#85adff",
+                      "surface-container": "#0f1930",
+                      "tertiary-fixed": "#53ddfc"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          }
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-dim selection:text-on-primary">
+<!-- Shared SideNavBar -->
+<aside class="hidden md:flex flex-col gap-y-2 p-6 h-screen w-72 fixed left-0 top-0 bg-[#091328]/80 backdrop-blur-xl border-r border-white/5 z-50">
+<div class="mb-10 px-2">
+<h1 class="text-2xl font-bold text-blue-300 font-headline">Chronos</h1>
+<p class="text-xs text-on-surface-variant font-medium tracking-widest uppercase mt-1">Productivity System</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">today</span>
+<span>ภาพรวมวันนี้</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-blue-300 bg-blue-400/10 rounded-xl transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span>ปฏิทิน</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">format_list_bulleted</span>
+<span>รายการงาน</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span>วิเคราะห์สถิติ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">sticky_note_2</span>
+<span>บันทึก</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-white/5">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out font-['Plus_Jakarta_Sans'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>ตั้งค่า</span>
+</a>
+<div class="mt-4 flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden ring-2 ring-primary/20">
+<img class="w-full h-full object-cover" data-alt="portrait of a young designer with glasses and creative expression in a dark studio setting with neon blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ2NEThf0YUwoBBvXXvxrptC8Exs7k1XaS-v7ab-VtEwrpc3RcIgS2_OYd9SVQYBGByvD_yeP0a1hMj_GUtWDdDuGACFZMYAgAgg84ja8b20_tcDYT4UkDBDo1pCzLmy1ArraQIVFTMKlCjQy84Fln6UoKewnMqF6EfOiBgBT049Y0nLNkPMzJKDVXX6O4hcMHjhsmA1PMFiV7hkB8cFEu4_NqXuDsQbfDJ0LR5YA8d8m1eefUqX3UTPctBJX3q9ciuuMeFyu3fN2O"/>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">Alex Chen</span>
+<span class="text-[10px] text-primary uppercase font-bold">Pro Account</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-72 min-h-screen flex flex-col relative">
+<!-- TopNavBar Shell -->
+<header class="flex justify-between items-center px-8 py-4 w-full sticky top-0 z-40 bg-slate-950/40 backdrop-blur-lg shadow-[0_8px_32px_rgba(105,156,255,0.08)]">
+<div class="flex items-center gap-6">
+<h2 class="text-xl font-black bg-gradient-to-r from-[#85adff] to-[#ac8aff] bg-clip-text text-transparent font-headline">ปฏิทิน</h2>
+<!-- View Switcher -->
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-1.5 text-xs font-bold text-blue-300 bg-white/5 rounded-md transition-all">เดือน</button>
+<button class="px-4 py-1.5 text-xs font-medium text-slate-400 hover:text-on-surface transition-all">สัปดาห์</button>
+<button class="px-4 py-1.5 text-xs font-medium text-slate-400 hover:text-on-surface transition-all">วัน</button>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="absolute inset-y-0 left-3 flex items-center text-slate-500">
+<span class="material-symbols-outlined text-sm">search</span>
+</span>
+<input class="bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm w-64 focus:ring-1 focus:ring-primary/50 placeholder:text-slate-600 transition-all" placeholder="ค้นหาเหตุการณ์..." type="text"/>
+</div>
+<button class="p-2 text-slate-400 hover:bg-white/5 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Calendar Grid (Bento Style Layout) -->
+<section class="flex-1 p-8 overflow-y-auto">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-4">
+<h3 class="text-4xl font-extrabold font-headline tracking-tight">พฤษภาคม <span class="text-primary-dim font-light">2024</span></h3>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container-low rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="p-2 bg-surface-container-low rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+<button class="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-primary to-secondary rounded-lg font-bold text-sm shadow-[0_8px_20px_rgba(105,156,255,0.2)] hover:scale-[1.02] active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-xl">add</span>
+                        สร้างกิจกรรม
+                    </button>
+</div>
+<!-- Calendar Content -->
+<div class="grid grid-cols-7 gap-4">
+<!-- Day Labels -->
+<div class="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-on-surface-variant pb-2">อาทิตย์</div>
+<div class="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-on-surface-variant pb-2">จันทร์</div>
+<div class="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-on-surface-variant pb-2">อังคาร</div>
+<div class="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-on-surface-variant pb-2">พุธ</div>
+<div class="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-on-surface-variant pb-2">พฤหัสฯ</div>
+<div class="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-on-surface-variant pb-2">ศุกร์</div>
+<div class="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-on-surface-variant pb-2">เสาร์</div>
+<!-- Row 1 -->
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-lowest opacity-30 text-xs">28</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-lowest opacity-30 text-xs">29</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-lowest opacity-30 text-xs">30</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">1</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">2</span>
+</div>
+<div class="mt-2 space-y-1">
+<div class="h-1.5 w-1.5 rounded-full bg-secondary"></div>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">3</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">4</span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">5</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">6</span>
+</div>
+<div class="mt-2 p-1 bg-primary/10 rounded border-l-2 border-primary">
+<p class="text-[10px] text-primary truncate font-bold uppercase">ประชุมทีม</p>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">7</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">8</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">9</span>
+</div>
+<div class="mt-2 p-1 bg-secondary/10 rounded border-l-2 border-secondary">
+<p class="text-[10px] text-secondary truncate font-bold uppercase">Design Review</p>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">10</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">11</span>
+</div>
+</div>
+<!-- Row 3 (Focus Day) -->
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">12</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">13</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">14</span>
+</div>
+</div>
+<!-- TODAY MARKER -->
+<div class="aspect-square p-3 rounded-2xl bg-surface-variant ring-2 ring-primary/50 relative overflow-hidden shadow-[0_20px_40px_rgba(105,156,255,0.15)]">
+<div class="absolute top-0 right-0 p-2 opacity-20">
+<span class="material-symbols-outlined text-4xl">flare</span>
+</div>
+<div class="flex justify-between items-start relative z-10">
+<span class="text-sm font-black text-primary">15</span>
+</div>
+<div class="mt-3 p-1.5 bg-primary rounded border-l-2 border-white/40 shadow-lg">
+<p class="text-[10px] text-on-primary truncate font-black uppercase">Workshop</p>
+</div>
+<p class="mt-1 text-[8px] text-primary-dim uppercase font-bold tracking-wider">วันนี้</p>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">16</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">17</span>
+</div>
+</div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-sm font-bold">18</span>
+</div>
+</div>
+<!-- Remaining Rows -->
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">19</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">20</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">21</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">22</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">23</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">24</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">25</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">26</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">27</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">28</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">29</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">30</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-colors"><span class="text-sm font-bold">31</span></div>
+<div class="aspect-square p-3 rounded-2xl bg-surface-container-lowest opacity-30 text-xs">1</div>
+</div>
+</section>
+<!-- Unscheduled Tasks Sidebar (The Obsidian Lens effect) -->
+<aside class="w-80 bg-surface-container-low border-l border-white/5 p-6 hidden xl:block overflow-y-auto">
+<div class="mb-8">
+<h4 class="text-lg font-bold font-headline mb-1">งานที่ยังไม่กำหนดเวลา</h4>
+<p class="text-xs text-on-surface-variant font-medium">ลากเพื่อลงตารางปฏิทิน</p>
+</div>
+<div class="space-y-4">
+<!-- Task Item -->
+<div class="p-4 bg-surface-container-highest rounded-xl border border-white/5 group hover:border-primary/30 transition-all cursor-grab active:cursor-grabbing">
+<div class="flex justify-between mb-2">
+<span class="text-[10px] uppercase font-bold text-tertiary tracking-wider">Project X</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant">drag_indicator</span>
+</div>
+<h5 class="text-sm font-semibold mb-2">อัปเดตไฟล์ Design System</h5>
+<div class="flex items-center gap-2">
+<div class="w-full bg-surface-container-low h-1 rounded-full overflow-hidden">
+<div class="bg-tertiary w-3/4 h-full"></div>
+</div>
+<span class="text-[9px] font-bold">75%</span>
+</div>
+</div>
+<!-- Task Item -->
+<div class="p-4 bg-surface-container-highest rounded-xl border border-white/5 group hover:border-secondary/30 transition-all cursor-grab">
+<div class="flex justify-between mb-2">
+<span class="text-[10px] uppercase font-bold text-secondary tracking-wider">Creative</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant">drag_indicator</span>
+</div>
+<h5 class="text-sm font-semibold mb-1">เขียนบทความลง Medium</h5>
+<p class="text-[10px] text-on-surface-variant mb-3">Topic: Future of AI UI</p>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-surface-container-highest bg-slate-400 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="close-up of a happy smiling woman in a colorful background with professional soft focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyGMdvvRQs2xd4HitmdCopp9Zx5iOgxwS3XyWgCueL7JjU7DvWNmnh60mNxJjRj1YIhkNTA_Lr1H420dMCmiT07ZAlKCG7cWL9S32V3L56xKm67Cd6bF4aAPGV-Vbeqwt_GMdm445XEfEqsAehxEVZ8w_tmnZqM_ib75YjTZwHS4NUrS7vWqb9e4vJKihKX6H2N85tKB-dZY2xP3A7rzZ8y4_YppwmRTNfWGQs4eLeH568JO9S4qG3aczLmCJh3rsS963EuLLLWVYb"/>
+</div>
+</div>
+</div>
+<!-- Task Item -->
+<div class="p-4 bg-surface-container-highest rounded-xl border border-white/5 group hover:border-primary/30 transition-all cursor-grab">
+<div class="flex justify-between mb-2">
+<span class="text-[10px] uppercase font-bold text-primary tracking-wider">Health</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant">drag_indicator</span>
+</div>
+<h5 class="text-sm font-semibold">ซื้อรองเท้าวิ่งคู่ใหม่</h5>
+</div>
+<!-- Empty Task State / Suggestion -->
+<div class="p-6 border-2 border-dashed border-outline-variant/30 rounded-xl flex flex-col items-center justify-center text-center opacity-50 group hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-3xl mb-2">post_add</span>
+<p class="text-xs font-bold uppercase tracking-widest">เพิ่มไอเดียใหม่</p>
+</div>
+</div>
+<!-- Mini Analytics in Sidebar -->
+<div class="mt-12 p-6 bg-gradient-to-br from-surface-variant to-surface-container-highest rounded-2xl relative overflow-hidden">
+<div class="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
+<h5 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4">สถิติสัปดาห์นี้</h5>
+<div class="flex items-end gap-3 h-24">
+<div class="flex-1 bg-primary/20 rounded-t-sm h-12"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm h-16"></div>
+<div class="flex-1 bg-primary/60 rounded-t-sm h-20"></div>
+<div class="flex-1 bg-primary rounded-t-sm h-24 shadow-[0_0_15px_rgba(133,173,255,0.3)]"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm h-14"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-10"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-8"></div>
+</div>
+<p class="mt-4 text-sm font-bold">ผลผลิตเพิ่มขึ้น <span class="text-primary">+12%</span></p>
+</div>
+</aside>
+</div>
+<!-- Floating Action Button (FAB) Mobile -->
+<button class="md:hidden fixed bottom-24 right-6 w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/20 z-50">
+<span class="material-symbols-outlined text-on-primary">add</span>
+</button>
+<!-- Shared BottomNavBar for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-surface-variant/40 backdrop-blur-2xl flex items-center justify-around px-4 z-40 border-t border-white/5">
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">today</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">หน้าแรก</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">ปฏิทิน</span>
+</a>
+<div class="w-12 h-12 flex items-center justify-center bg-white/5 rounded-full -mt-10 border border-white/10 backdrop-blur-md">
+<span class="material-symbols-outlined text-primary">add</span>
+</div>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">สถิติ</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">ตั้งค่า</span>
+</a>
+</nav>
+</main>
+</body></html>

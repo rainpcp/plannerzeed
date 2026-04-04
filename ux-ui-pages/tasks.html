@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tasks - Ethereal Chronos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #060e20;
+        }
+        h1, h2, h3, .display-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(25, 37, 64, 0.6);
+            backdrop-filter: blur(12px);
+        }
+        .glass-card {
+            background: rgba(25, 37, 64, 0.4);
+            backdrop-filter: blur(8px);
+        }
+        .ghost-border {
+            outline: 1px solid rgba(64, 72, 93, 0.15);
+        }
+        .priority-border {
+            position: relative;
+            background-clip: padding-box;
+            border: 1px solid transparent;
+        }
+        .priority-border::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            margin: -1px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, #85adff, #ac8aff);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#192540",
+                      "surface-dim": "#060e20",
+                      "outline-variant": "#40485d",
+                      "tertiary": "#8ce7ff",
+                      "secondary-fixed": "#dac9ff",
+                      "error-container": "#9f0519",
+                      "on-surface-variant": "#a3aac4",
+                      "surface-container-high": "#141f38",
+                      "tertiary-fixed": "#53ddfc",
+                      "on-secondary-fixed": "#40009b",
+                      "surface-container-low": "#091328",
+                      "inverse-surface": "#faf8ff",
+                      "tertiary-fixed-dim": "#40ceed",
+                      "error-dim": "#d7383b",
+                      "inverse-primary": "#005bc4",
+                      "on-tertiary": "#005464",
+                      "primary-dim": "#699cff",
+                      "surface-container-lowest": "#000000",
+                      "inverse-on-surface": "#4d556b",
+                      "on-primary-container": "#002150",
+                      "secondary-fixed-dim": "#ceb9ff",
+                      "on-surface": "#dee5ff",
+                      "surface-tint": "#85adff",
+                      "secondary": "#ac8aff",
+                      "on-error": "#490006",
+                      "on-tertiary-fixed-variant": "#005564",
+                      "secondary-container": "#5516be",
+                      "on-primary-fixed-variant": "#002a62",
+                      "surface-bright": "#1f2b49",
+                      "on-secondary-fixed-variant": "#5f28c8",
+                      "primary-container": "#6e9fff",
+                      "on-secondary-container": "#d9c8ff",
+                      "surface-container": "#0f1930",
+                      "primary": "#85adff",
+                      "on-background": "#dee5ff",
+                      "error": "#ff716c",
+                      "tertiary-dim": "#40ceed",
+                      "outline": "#6d758c",
+                      "on-tertiary-container": "#004b58",
+                      "on-tertiary-fixed": "#003640",
+                      "secondary-dim": "#8455ef",
+                      "surface-variant": "#192540",
+                      "on-primary-fixed": "#000000",
+                      "on-error-container": "#ffa8a3",
+                      "primary-fixed": "#6e9fff",
+                      "background": "#060e20",
+                      "primary-fixed-dim": "#5391ff",
+                      "tertiary-container": "#53ddfc",
+                      "surface": "#060e20",
+                      "on-secondary": "#280067",
+                      "on-primary": "#002c66"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen overflow-hidden flex">
+<!-- SideNavBar Component -->
+<aside class="hidden md:flex flex-col h-screen w-64 left-0 top-0 fixed bg-slate-900/80 backdrop-blur-2xl p-6 space-y-8 z-50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<h1 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 to-purple-400">Chronos</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Deep Work Mode</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="text-slate-400 px-4 py-3 hover:bg-slate-800/40 rounded-2xl flex items-center gap-3 transition-all duration-300 hover:backdrop-blur-md hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="today">today</span>
+<span class="text-sm font-bold uppercase tracking-wider">Today</span>
+</a>
+<a class="text-slate-400 px-4 py-3 hover:bg-slate-800/40 rounded-2xl flex items-center gap-3 transition-all duration-300 hover:backdrop-blur-md hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-sm font-bold uppercase tracking-wider">Calendar</span>
+</a>
+<a class="bg-gradient-to-br from-blue-300/20 to-purple-400/20 text-blue-300 rounded-2xl px-4 py-3 flex items-center gap-3 transition-all duration-300 translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="text-sm font-bold uppercase tracking-wider">Tasks</span>
+</a>
+<a class="text-slate-400 px-4 py-3 hover:bg-slate-800/40 rounded-2xl flex items-center gap-3 transition-all duration-300 hover:backdrop-blur-md hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="cached">cached</span>
+<span class="text-sm font-bold uppercase tracking-wider">Habits</span>
+</a>
+<a class="text-slate-400 px-4 py-3 hover:bg-slate-800/40 rounded-2xl flex items-center gap-3 transition-all duration-300 hover:backdrop-blur-md hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="text-sm font-bold uppercase tracking-wider">Notes</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="w-full py-4 rounded-lg bg-gradient-to-br from-primary to-secondary text-on-primary font-bold shadow-[0_8px_32px_rgba(105,156,255,0.2)] flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Add New
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col md:ml-64 h-screen overflow-hidden relative">
+<!-- TopNavBar Component -->
+<header class="bg-slate-950/60 backdrop-blur-xl flex justify-between items-center w-full px-6 py-4 max-w-full sticky top-0 z-40">
+<div class="flex items-center gap-6 flex-1">
+<div class="bg-surface-container-low px-4 py-2 rounded-full flex items-center gap-3 w-full max-w-md">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full text-on-surface" placeholder="Search tasks..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:text-blue-200 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Portrait of a professional man with a slight smile in soft studio lighting with a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1PzzZVD1CyYoLzMHRBTZitJ2i3kri-o2yXChPujsZ1ZQD5ZvRbU-PjmiEBWTB04N57AXguHORSUIQmvDpVoe_x5CnnblBMby956HqC9Zq94lS1vlZXJLwkWlGfgUDLKzDdzi4KdxXlkMSd99kthozDlx6VbIBiKcd4HSDTTrK60kytvgMTiMBzW1CeJf1tteAm34OgymJ0dB5EyMM7PE7h6UibUTOjOmZ58WSg5KIXlCPVFjehj5yQ9AwRc_Jw_8OWNN_pUeXXmEx"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Task List Column -->
+<div class="flex-1 overflow-y-auto p-8 space-y-12">
+<!-- Page Header -->
+<div class="space-y-2">
+<h2 class="text-5xl font-extrabold tracking-tighter display-font text-on-surface">Master List</h2>
+<p class="text-on-surface-variant text-lg tracking-tight">Focus on what matters today.</p>
+</div>
+<!-- Work Category -->
+<section class="space-y-4">
+<div class="flex justify-between items-center px-2">
+<h3 class="text-xs uppercase tracking-[0.2em] font-bold text-primary">Work</h3>
+<span class="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">4 TASKS</span>
+</div>
+<div class="space-y-3">
+<!-- High Priority Task -->
+<div class="glass-card priority-border rounded-lg p-4 flex items-center gap-4 group cursor-pointer transition-all hover:translate-x-1">
+<div class="w-6 h-6 rounded border-2 border-primary/40 flex items-center justify-center group-hover:border-primary">
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="check" style="font-size: 16px;">check</span>
+</div>
+<div class="flex-1">
+<span class="text-on-surface font-semibold">Q3 Strategic Presentation</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="text-xs font-bold uppercase tracking-wider">10:00 AM</span>
+</div>
+</div>
+<div class="glass-card ghost-border rounded-lg p-4 flex items-center gap-4 group cursor-pointer transition-all hover:bg-surface-variant/40">
+<div class="w-6 h-6 rounded border-2 border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="check" style="font-size: 16px;">check</span>
+</div>
+<div class="flex-1">
+<span class="text-on-surface font-medium">Review Design Tokens</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="text-xs font-bold uppercase tracking-wider">02:30 PM</span>
+</div>
+</div>
+<div class="glass-card ghost-border rounded-lg p-4 flex items-center gap-4 group cursor-pointer transition-all hover:bg-surface-variant/40">
+<div class="w-6 h-6 rounded border-2 border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="check" style="font-size: 16px;">check</span>
+</div>
+<div class="flex-1">
+<span class="text-on-surface font-medium">Internal Sync with Engineering</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="text-xs font-bold uppercase tracking-wider">04:00 PM</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Personal Category -->
+<section class="space-y-4">
+<div class="flex justify-between items-center px-2">
+<h3 class="text-xs uppercase tracking-[0.2em] font-bold text-secondary">Personal</h3>
+<span class="text-[10px] bg-secondary/10 text-secondary px-2 py-0.5 rounded-full">2 TASKS</span>
+</div>
+<div class="space-y-3">
+<div class="glass-card ghost-border rounded-lg p-4 flex items-center gap-4 group cursor-pointer transition-all hover:bg-surface-variant/40">
+<div class="w-6 h-6 rounded border-2 border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="check" style="font-size: 16px;">check</span>
+</div>
+<div class="flex-1">
+<span class="text-on-surface font-medium">Evening Yoga Session</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="text-xs font-bold uppercase tracking-wider">06:00 PM</span>
+</div>
+</div>
+<div class="glass-card priority-border rounded-lg p-4 flex items-center gap-4 group cursor-pointer transition-all hover:translate-x-1">
+<div class="w-6 h-6 rounded border-2 border-secondary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="check" style="font-size: 16px;">check</span>
+</div>
+<div class="flex-1">
+<span class="text-on-surface font-semibold">Pick up Grocery items</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="text-xs font-bold uppercase tracking-wider">07:30 PM</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Learning Category -->
+<section class="space-y-4">
+<div class="flex justify-between items-center px-2">
+<h3 class="text-xs uppercase tracking-[0.2em] font-bold text-tertiary">Learning</h3>
+<span class="text-[10px] bg-tertiary/10 text-tertiary px-2 py-0.5 rounded-full">1 TASK</span>
+</div>
+<div class="space-y-3">
+<div class="glass-card ghost-border rounded-lg p-4 flex items-center gap-4 group cursor-pointer transition-all hover:bg-surface-variant/40">
+<div class="w-6 h-6 rounded border-2 border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="check" style="font-size: 16px;">check</span>
+</div>
+<div class="flex-1">
+<span class="text-on-surface font-medium">Advanced TypeScript Course</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="text-xs font-bold uppercase tracking-wider">09:00 PM</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Details Sidebar -->
+<aside class="w-[420px] bg-surface-container-low backdrop-blur-xl p-8 overflow-y-auto hidden lg:flex flex-col gap-8 shadow-[-32px_0_32px_rgba(105,156,255,0.03)] z-30">
+<div class="flex justify-between items-center">
+<h3 class="text-xs uppercase tracking-widest font-black text-on-surface-variant">Task Details</h3>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+<button class="p-2 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="space-y-4">
+<div class="text-3xl font-bold display-font tracking-tight text-on-surface">Q3 Strategic Presentation</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest rounded-full">Work</span>
+<span class="px-3 py-1 bg-secondary/20 text-secondary text-[10px] font-bold uppercase tracking-widest rounded-full">High Priority</span>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Deadline Picker -->
+<div class="space-y-2">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant tracking-[0.1em]">Deadline</label>
+<div class="flex items-center gap-4 bg-surface-container p-4 rounded-lg ghost-border">
+<span class="material-symbols-outlined text-primary" data-icon="calendar_month">calendar_month</span>
+<div class="flex-1">
+<div class="text-sm font-semibold">Tuesday, Oct 24</div>
+<div class="text-xs text-on-surface-variant">10:00 AM - 11:30 AM</div>
+</div>
+</div>
+</div>
+<!-- Notes Section -->
+<div class="space-y-2">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant tracking-[0.1em]">Notes</label>
+<div class="bg-surface-container p-4 rounded-lg ghost-border min-h-[120px] text-sm text-on-surface-variant leading-relaxed">
+                            Draft the presentation for the stakeholders meeting. Include the Q2 growth metrics and projected revenue for the upcoming quarter. Mention the new talent acquisition strategy.
+                        </div>
+</div>
+<!-- Subtasks Section -->
+<div class="space-y-4">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant tracking-[0.1em]">Subtasks (3)</label>
+<div class="space-y-2">
+<div class="flex items-center gap-3 p-3 bg-surface-container-high/40 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs text-on-surface line-through opacity-60">Export Q2 Charts</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-high/40 rounded-lg">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<span class="text-xs text-on-surface">Write speaker notes</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-high/40 rounded-lg">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<span class="text-xs text-on-surface">Format slides (Dark Theme)</span>
+</div>
+</div>
+<button class="w-full py-2 flex items-center justify-center gap-2 border-2 border-dashed border-outline-variant rounded-lg text-xs font-bold text-on-surface-variant hover:border-primary/40 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="add" style="font-size: 16px;">add</span>
+                            Add Subtask
+                        </button>
+</div>
+</div>
+<div class="mt-auto">
+<button class="w-full py-4 bg-surface-container-high rounded-xl font-bold text-on-surface hover:bg-primary/10 hover:text-primary transition-all flex items-center justify-center gap-2">
+                        Mark as Complete
+                    </button>
+</div>
+</aside>
+</div>
+<!-- Floating Action Button -->
+<button class="fixed bottom-8 right-8 lg:right-[452px] w-16 h-16 rounded-lg bg-gradient-to-br from-primary to-secondary text-on-primary-fixed shadow-[0_32px_32px_rgba(105,156,255,0.15)] flex items-center justify-center active:scale-90 transition-transform group z-50">
+<span class="material-symbols-outlined text-3xl transition-transform group-hover:rotate-90" data-icon="add">add</span>
+</button>
+</main>
+<!-- Mobile Nav Bar (Visible only on small screens) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-slate-900/60 backdrop-blur-2xl flex items-center justify-around px-6 z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="assignment" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Tasks</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Calendar</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="today">today</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Today</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Notes</span>
+</button>
+</nav>
+</body></html>

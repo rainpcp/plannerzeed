@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ethereal Chronos | Deep Work Journal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-highest": "#192540",
+                "surface-dim": "#060e20",
+                "outline-variant": "#40485d",
+                "tertiary": "#8ce7ff",
+                "secondary-fixed": "#dac9ff",
+                "error-container": "#9f0519",
+                "on-surface-variant": "#a3aac4",
+                "surface-container-high": "#141f38",
+                "tertiary-fixed": "#53ddfc",
+                "on-secondary-fixed": "#40009b",
+                "surface-container-low": "#091328",
+                "inverse-surface": "#faf8ff",
+                "tertiary-fixed-dim": "#40ceed",
+                "error-dim": "#d7383b",
+                "inverse-primary": "#005bc4",
+                "on-tertiary": "#005464",
+                "primary-dim": "#699cff",
+                "surface-container-lowest": "#000000",
+                "inverse-on-surface": "#4d556b",
+                "on-primary-container": "#002150",
+                "secondary-fixed-dim": "#ceb9ff",
+                "on-surface": "#dee5ff",
+                "surface-tint": "#85adff",
+                "secondary": "#ac8aff",
+                "on-error": "#490006",
+                "on-tertiary-fixed-variant": "#005564",
+                "secondary-container": "#5516be",
+                "on-primary-fixed-variant": "#002a62",
+                "surface-bright": "#1f2b49",
+                "on-secondary-fixed-variant": "#5f28c8",
+                "primary-container": "#6e9fff",
+                "on-secondary-container": "#d9c8ff",
+                "surface-container": "#0f1930",
+                "primary": "#85adff",
+                "on-background": "#dee5ff",
+                "error": "#ff716c",
+                "tertiary-dim": "#40ceed",
+                "outline": "#6d758c",
+                "on-tertiary-container": "#004b58",
+                "on-tertiary-fixed": "#003640",
+                "secondary-dim": "#8455ef",
+                "surface-variant": "#192540",
+                "on-primary-fixed": "#000000",
+                "on-error-container": "#ffa8a3",
+                "primary-fixed": "#6e9fff",
+                "background": "#060e20",
+                "primary-fixed-dim": "#5391ff",
+                "tertiary-container": "#53ddfc",
+                "surface": "#060e20",
+                "on-secondary": "#280067",
+                "on-primary": "#002c66"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Plus Jakarta Sans"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #060e20; }
+        h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 left-0 top-0 fixed bg-slate-900/80 backdrop-blur-2xl p-6 space-y-8 z-50 shadow-[32px_0_32px_rgba(105,156,255,0.08)]">
+<div class="flex items-center space-x-2">
+<span class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 to-purple-400">Chronos</span>
+</div>
+<div class="space-y-2 flex-grow">
+<a class="flex items-center space-x-3 text-slate-400 px-4 py-3 hover:bg-slate-800/40 rounded-2xl transition-all duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">today</span>
+<span class="text-xs font-bold uppercase tracking-widest">Today</span>
+</a>
+<a class="flex items-center space-x-3 text-slate-400 px-4 py-3 hover:bg-slate-800/40 rounded-2xl transition-all duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-xs font-bold uppercase tracking-widest">Calendar</span>
+</a>
+<a class="flex items-center space-x-3 text-slate-400 px-4 py-3 hover:bg-slate-800/40 rounded-2xl transition-all duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-xs font-bold uppercase tracking-widest">Tasks</span>
+</a>
+<a class="flex items-center space-x-3 text-slate-400 px-4 py-3 hover:bg-slate-800/40 rounded-2xl transition-all duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">cached</span>
+<span class="text-xs font-bold uppercase tracking-widest">Habits</span>
+</a>
+<a class="flex items-center space-x-3 bg-gradient-to-br from-blue-300/20 to-purple-400/20 text-blue-300 rounded-2xl px-4 py-3 transition-all duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-xs font-bold uppercase tracking-widest">Notes</span>
+</a>
+</div>
+<button class="bg-gradient-to-br from-primary to-secondary text-on-primary font-bold py-4 rounded-lg flex items-center justify-center space-x-2 shadow-[0_32px_32px_rgba(105,156,255,0.08)]">
+<span class="material-symbols-outlined">add</span>
+<span>Add New</span>
+</button>
+<div class="pt-6 border-t border-outline-variant/10">
+<div class="flex items-center space-x-3">
+<img alt="User Profile" class="w-10 h-10 rounded-full object-cover grayscale opacity-80" data-alt="close-up portrait of a thoughtful man in a minimalist studio setting with moody blue shadows and soft highlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtvceapfak_FaO1_Bag2c5lpZ0i721j8_yNX48E7CVjrqrnriHtT-rn-u9p5Xj7ON47lvca7sW6XUSbVxVuAe5WQKiVHDm-Vjmo1YvJOt1cIK3rEVoq-KCOAU804_fiRgXl9g_7DvR1B0WqYsMDSpk5wEesdW-sZ6kC3OtLZo9veVtfm8kGstXIshkQfy4gLaJXSd6VWAYmoAoThlsE6VrGPrhQoBKVc6DBlJeWkLkXKoFLGmfE_H3-sMIg1TG1D9h00t9GMY4OUYj"/>
+<div class="overflow-hidden">
+<p class="text-sm font-bold truncate">Julian Thorne</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Deep Work Mode</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-grow md:ml-64 min-h-screen flex flex-col relative overflow-hidden">
+<!-- Background Orbs -->
+<div class="absolute top-[-10%] right-[-5%] w-[40rem] h-[40rem] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-[-5%] left-[-5%] w-[30rem] h-[30rem] bg-secondary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- TopNavBar -->
+<header class="sticky top-0 z-40 bg-slate-950/60 backdrop-blur-xl flex justify-between items-center w-full px-8 py-4">
+<div class="flex items-center gap-8">
+<h1 class="text-2xl font-bold tracking-tighter text-blue-300">Ethereal Chronos</h1>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-sm w-64 focus:ring-1 focus:ring-primary/40 text-on-surface" placeholder="Search notes..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<span class="material-symbols-outlined text-slate-400 hover:text-blue-200 transition-colors cursor-pointer">notifications</span>
+<div class="h-8 w-px bg-outline-variant/20"></div>
+<div class="flex items-center space-x-3">
+<span class="text-xs font-bold uppercase text-slate-400 tracking-tighter">Tuesday, Oct 24</span>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="flex flex-col lg:flex-row flex-grow p-6 gap-6 relative z-10 overflow-hidden h-[calc(100vh-72px)]">
+<!-- Left Panel: Recent Notes -->
+<section class="w-full lg:w-80 flex flex-col space-y-4 h-full">
+<div class="flex items-center justify-between px-2">
+<h2 class="text-lg font-bold text-on-surface">Recent Notes</h2>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">tune</span>
+</div>
+<div class="flex-grow overflow-y-auto no-scrollbar space-y-3 pr-2 pb-10">
+<!-- Note Item Active -->
+<div class="p-5 rounded-lg bg-surface-container-high border border-outline-variant/15 relative overflow-hidden group transition-all duration-300">
+<div class="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-secondary"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Reflections</span>
+<span class="text-[10px] text-on-surface-variant">2m ago</span>
+</div>
+<h3 class="font-bold text-on-surface leading-tight mb-2">The Obsidian Lens: Structural Logic</h3>
+<p class="text-xs text-on-surface-variant line-clamp-2">Exploration of depth and layers within the new UI system for Chronos...</p>
+</div>
+<!-- Note Item -->
+<div class="p-5 rounded-lg bg-surface-container-low/50 border border-outline-variant/5 hover:bg-surface-container-high transition-all duration-300 group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary">Ideas</span>
+<span class="text-[10px] text-on-surface-variant">4h ago</span>
+</div>
+<h3 class="font-bold text-on-surface leading-tight mb-2">Quarterly Roadmap 2024</h3>
+<p class="text-xs text-on-surface-variant line-clamp-2">Key milestones for the development team including API migrations and...</p>
+</div>
+<!-- Note Item -->
+<div class="p-5 rounded-lg bg-surface-container-low/50 border border-outline-variant/5 hover:bg-surface-container-high transition-all duration-300 group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-tertiary">Meetings</span>
+<span class="text-[10px] text-on-surface-variant">Yesterday</span>
+</div>
+<h3 class="font-bold text-on-surface leading-tight mb-2">Client Brief: Astral Systems</h3>
+<p class="text-xs text-on-surface-variant line-clamp-2">Meeting notes regarding the rebrand and the core requirements for the dashboard...</p>
+</div>
+<!-- Note Item -->
+<div class="p-5 rounded-lg bg-surface-container-low/50 border border-outline-variant/5 hover:bg-surface-container-high transition-all duration-300 group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Reflections</span>
+<span class="text-[10px] text-on-surface-variant">Oct 21</span>
+</div>
+<h3 class="font-bold text-on-surface leading-tight mb-2">Daily Stoic Journaling</h3>
+<p class="text-xs text-on-surface-variant line-clamp-2">Control the things you can, let go of the things you cannot. Focus on today...</p>
+</div>
+</div>
+</section>
+<!-- Right Panel: Note Editor -->
+<section class="flex-grow glass-panel bg-surface-variant/40 rounded-lg flex flex-col border border-outline-variant/10 overflow-hidden">
+<!-- Formatting Toolbar -->
+<div class="p-4 border-b border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center space-x-1">
+<button class="p-2 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">format_bold</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">format_italic</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">format_list_bulleted</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">format_quote</span>
+</button>
+<div class="w-px h-6 bg-outline-variant/20 mx-2"></div>
+<button class="p-2 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">image</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-lg">link</span>
+</button>
+</div>
+<div class="flex items-center space-x-3">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-high bg-slate-800 flex items-center justify-center text-[10px] font-bold text-on-surface-variant">JT</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-high bg-primary-container flex items-center justify-center text-[10px] font-bold text-on-primary-container">AA</div>
+</div>
+<button class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-primary px-4 py-2 rounded-full border border-primary/20 hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-sm">share</span>
+<span>Share</span>
+</button>
+</div>
+</div>
+<!-- Editor Title & Metadata -->
+<div class="px-10 py-8 space-y-4">
+<input class="w-full bg-transparent border-none text-4xl font-extrabold tracking-tight text-on-surface focus:ring-0 placeholder-on-surface-variant/30 px-0" type="text" value="The Obsidian Lens: Structural Logic"/>
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center space-x-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/10">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Reflections</span>
+</div>
+<div class="flex items-center space-x-2 bg-surface-container-high px-3 py-1.5 rounded-full border border-outline-variant/10 cursor-pointer hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-xs text-on-surface-variant">add</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Add Tag</span>
+</div>
+<div class="h-4 w-px bg-outline-variant/20 mx-1"></div>
+<span class="text-[10px] font-medium text-on-surface-variant uppercase tracking-widest">Edited 2 minutes ago</span>
+</div>
+</div>
+<!-- Text Area -->
+<div class="flex-grow px-10 pb-10 overflow-y-auto no-scrollbar">
+<textarea class="w-full h-full bg-transparent border-none text-on-surface-variant leading-relaxed text-lg focus:ring-0 resize-none p-0 placeholder-on-surface-variant/20" placeholder="Start deep writing here...">This design system moves away from the rigid, boxed-in architecture of traditional productivity apps and instead embraces the concept of "The Obsidian Lens." 
+
+The goal is to create a digital environment that feels like a high-end physical planner resting on a dark, polished stone surface. By utilizing deep tonal depth, intentional asymmetry, and glass-like refraction, we transform mundane task management into a curated editorial experience. 
+
+Key pillars:
+- Atmospheric Depth: Use transparency and blur to create a multi-dimensional workspace.
+- Editorial Authority: High-contrast, oversized typography scales.
+- Fluidity over Rigidity: Avoid harsh containment; allow elements to float and overlap naturally.
+
+We break the "template" look by layering translucent surfaces that allow light and color to bleed through, creating a sense of "living" software rather than a static grid.</textarea>
+</div>
+</section>
+</div>
+<!-- Floatting UI elements for depth -->
+<div class="fixed bottom-10 right-10 z-50">
+<button class="w-16 h-16 rounded-lg bg-gradient-to-br from-primary to-secondary text-white shadow-[0_32px_32px_rgba(105,156,255,0.15)] flex items-center justify-center group hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl font-light">edit_note</span>
+</button>
+</div>
+</main>
+<!-- Navigation Shell Mobile Only -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-20 glass-panel bg-surface-variant/40 border-t border-outline-variant/10 flex justify-around items-center px-6 z-50">
+<div class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">today</span>
+</div>
+<div class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">assignment</span>
+</div>
+<div class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined">description</span>
+<div class="w-1 h-1 rounded-full bg-primary mt-1"></div>
+</div>
+<div class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</div>
+</nav>
+</body></html>

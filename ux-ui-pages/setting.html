@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ตั้งค่า - Ethereal Chronos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #060e20;
+            color: #dee5ff;
+        }
+        .headline-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(25, 37, 64, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .main-gradient-bg {
+            background: linear-gradient(135deg, #85adff 0%, #ac8aff 100%);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#000000",
+                        "secondary-container": "#5516be",
+                        "secondary": "#ac8aff",
+                        "on-tertiary": "#005464",
+                        "on-background": "#dee5ff",
+                        "surface-dim": "#060e20",
+                        "inverse-surface": "#faf8ff",
+                        "primary-dim": "#699cff",
+                        "outline": "#6d758c",
+                        "error-dim": "#d7383b",
+                        "on-surface": "#dee5ff",
+                        "on-tertiary-container": "#004b58",
+                        "inverse-primary": "#005bc4",
+                        "on-primary": "#002c66",
+                        "primary-container": "#6e9fff",
+                        "primary-fixed": "#6e9fff",
+                        "tertiary-container": "#53ddfc",
+                        "surface-container-low": "#091328",
+                        "tertiary": "#8ce7ff",
+                        "on-primary-fixed-variant": "#002a62",
+                        "surface-variant": "#192540",
+                        "on-tertiary-fixed-variant": "#005564",
+                        "secondary-fixed": "#dac9ff",
+                        "error": "#ff716c",
+                        "on-secondary": "#280067",
+                        "surface-container-high": "#141f38",
+                        "tertiary-fixed-dim": "#40ceed",
+                        "on-secondary-container": "#d9c8ff",
+                        "secondary-dim": "#8455ef",
+                        "on-primary-fixed": "#000000",
+                        "surface": "#060e20",
+                        "inverse-on-surface": "#4d556b",
+                        "on-surface-variant": "#a3aac4",
+                        "on-secondary-fixed-variant": "#5f28c8",
+                        "on-secondary-fixed": "#40009b",
+                        "secondary-fixed-dim": "#ceb9ff",
+                        "on-tertiary-fixed": "#003640",
+                        "error-container": "#9f0519",
+                        "surface-container-highest": "#192540",
+                        "surface-bright": "#1f2b49",
+                        "on-error": "#490006",
+                        "background": "#060e20",
+                        "on-error-container": "#ffa8a3",
+                        "primary-fixed-dim": "#5391ff",
+                        "on-primary-container": "#002150",
+                        "primary": "#85adff",
+                        "outline-variant": "#40485d",
+                        "tertiary-dim": "#40ceed",
+                        "surface-tint": "#85adff",
+                        "surface-container": "#0f1930",
+                        "tertiary-fixed": "#53ddfc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface-dim text-on-surface antialiased no-scrollbar selection:bg-primary-dim selection:text-on-primary">
+<aside class="hidden md:flex flex-col gap-y-2 p-6 h-screen w-72 fixed left-0 top-0 bg-[#091328]/80 backdrop-blur-xl border-r border-white/5 z-40">
+<div class="mb-10 px-2">
+<h1 class="text-2xl font-bold text-blue-300 headline-font">Chronos</h1>
+<p class="text-xs text-slate-400 font-medium tracking-widest uppercase">Productivity System</p>
+</div>
+<nav class="flex flex-col gap-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="today">today</span>
+<span class="font-medium text-sm">ภาพรวมวันนี้</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-medium text-sm">ปฏิทิน</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="format_list_bulleted">format_list_bulleted</span>
+<span class="font-medium text-sm">รายการงาน</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="font-medium text-sm">วิเคราะห์สถิติ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-blue-200 hover:bg-white/5 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="sticky_note_2">sticky_note_2</span>
+<span class="font-medium text-sm">บันทึก</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-blue-300 bg-blue-400/10 rounded-xl transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-medium text-sm">ตั้งค่า</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-white/5 flex items-center gap-4 px-2">
+<div class="relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="User Profile Picture" class="w-full h-full object-cover" data-alt="close-up portrait of a professional woman with a minimalist background and soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7bhRPAkR4zloYlycaa-RPrSTnOG5qFuVy0CHXnQiLruuhbSp590acqQQAz4RlK9gnxvMURiXKAN1GLy1d9u9YL9fs59bn-pbW_1drnwZK51OVwNEdxsVsvPBxXCT9VCvF4tKQiL-x1kkmGqr7UqmtQxoiACMpHsZeY1efL5Mn5qoSTPVxztqtN7Bt0_BMy0dwSai1gn4V786c2pMu3-YCKDge0VgseTxYcgAizJ9J3WjAsi6vdDlhmKASR-nR29-RUA-h1bP9CWl_"/>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">อาทิตย์ รัตน</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-wider">Premium Member</span>
+</div>
+</div>
+</aside>
+<main class="md:ml-72 min-h-screen pb-24">
+<header class="flex justify-between items-center px-8 py-6 w-full sticky top-0 z-30 bg-slate-950/40 backdrop-blur-lg shadow-[0_8px_32px_rgba(105,156,255,0.08)]">
+<div class="flex items-center gap-4">
+<h2 class="text-2xl font-black bg-gradient-to-r from-[#85adff] to-[#ac8aff] bg-clip-text text-transparent headline-font tracking-tight">ตั้งค่า</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group hidden sm:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-lg" data-icon="search">search</span>
+<input class="bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm w-64 focus:ring-1 focus:ring-primary/40 transition-all" placeholder="ค้นหาการตั้งค่า..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-blue-300 hover:bg-white/5 p-2 rounded-full transition-colors" data-icon="notifications">notifications</button>
+</div>
+</header>
+<div class="max-w-5xl mx-auto px-8 py-10 space-y-12">
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-4">
+<h3 class="text-xl font-bold headline-font mb-2">โปรไฟล์</h3>
+<p class="text-sm text-on-surface-variant">จัดการข้อมูลส่วนตัวและความเป็นส่วนตัวของคุณ</p>
+</div>
+<div class="lg:col-span-8 glass-panel p-8 rounded-lg space-y-8">
+<div class="flex flex-col sm:flex-row items-center gap-8">
+<div class="relative group">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/20 group-hover:border-primary/50 transition-all">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="professional modern headshot of a creative professional in a sleek dark studio setting with blue ambient light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXZrKe51pIesmo_jynydtduaOgbrYDGj4g3WCF4HJTcAE7SBVOoQ_5TqE628LJ0-JI3Tmi0yWtwaxHbqk3xGxWzP-6MTOqo7ub9ijroLr3JAucZZf-UK-iHCEp9tyHNWh8VJG7jdajRxIc8GZHorcU-STDQ-_U2UPQv1Mz-yJaoWIyR4TT8REGd5gcV3nV8vUOp-yPY6g-wX1EVdt3PtkVRJZtAnegEfSiM8L-jxFX45-8nB0A04Kpm3OLSxlsg-JNxUBA_8mKfKAy"/>
+</div>
+<button class="absolute bottom-0 right-0 main-gradient-bg w-8 h-8 rounded-full flex items-center justify-center shadow-lg border-2 border-surface-dim">
+<span class="material-symbols-outlined text-xs text-on-primary" data-icon="edit">edit</span>
+</button>
+</div>
+<div class="flex-1 space-y-4 w-full">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">ชื่อผู้ใช้</label>
+<input class="w-full bg-surface-container-low border-none rounded-md px-4 py-2 text-sm focus:ring-1 focus:ring-primary/40" type="text" value="อาทิตย์ รัตน"/>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">อีเมล</label>
+<input class="w-full bg-surface-container-low border-none rounded-md px-4 py-2 text-sm focus:ring-1 focus:ring-primary/40" type="email" value="arthit.r@chronos.ai"/>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-end pt-4 border-t border-white/5">
+<button class="px-6 py-2 rounded-full text-sm font-semibold text-primary hover:bg-primary/10 transition-colors">บันทึกการเปลี่ยนแปลง</button>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-4">
+<h3 class="text-xl font-bold headline-font mb-2">บัญชีผู้ใช้</h3>
+<p class="text-sm text-on-surface-variant">ความปลอดภัยและการเชื่อมต่อบัญชี</p>
+</div>
+<div class="lg:col-span-8 space-y-4">
+<div class="glass-panel p-6 rounded-lg flex items-center justify-between group hover:bg-surface-variant/80 transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">เปลี่ยนรหัสผ่าน</h4>
+<p class="text-xs text-on-surface-variant">ปรับปรุงความปลอดภัยของบัญชีคุณ</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="glass-panel p-6 rounded-lg flex items-center justify-between group hover:bg-surface-variant/80 transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="cloud_sync">cloud_sync</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">ซิงค์ข้อมูลคลาวด์</h4>
+<p class="text-xs text-on-surface-variant">สำรองข้อมูลอัตโนมัติไปยังเซิร์ฟเวอร์</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] text-primary font-bold uppercase tracking-widest mr-2">Connected</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-4">
+<h3 class="text-xl font-bold headline-font mb-2">ธีมและการแสดงผล</h3>
+<p class="text-sm text-on-surface-variant">ปรับแต่งประสบการณ์การใช้งานตามความชอบ</p>
+</div>
+<div class="lg:col-span-8 glass-panel p-8 rounded-lg space-y-8">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">ธีม</h4>
+<p class="text-xs text-on-surface-variant">เลือกโหมดสว่างหรือโหมดมืด</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-1 rounded-full flex">
+<button class="px-4 py-1.5 rounded-full text-xs font-bold text-on-surface-variant hover:text-on-surface transition-all">สว่าง</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold bg-primary text-on-primary-container shadow-md">มืด</button>
+</div>
+</div>
+<div class="pt-6 border-t border-white/5 space-y-4">
+<h5 class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">โทนสีหลัก</h5>
+<div class="flex gap-4">
+<button class="w-8 h-8 rounded-full bg-[#85adff] ring-2 ring-offset-2 ring-offset-surface ring-primary"></button>
+<button class="w-8 h-8 rounded-full bg-[#ac8aff]"></button>
+<button class="w-8 h-8 rounded-full bg-[#8ce7ff]"></button>
+<button class="w-8 h-8 rounded-full bg-[#ff716c]"></button>
+</div>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-4">
+<h3 class="text-xl font-bold headline-font mb-2">การแจ้งเตือน</h3>
+<p class="text-sm text-on-surface-variant">ควบคุมการแจ้งเตือนและการเตือนความจำ</p>
+</div>
+<div class="lg:col-span-8 space-y-4">
+<div class="glass-panel p-6 rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">การแจ้งเตือนแบบพุช</h4>
+<p class="text-xs text-on-surface-variant">รับข่าวสารและการเตือนผ่านอุปกรณ์</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="glass-panel p-6 rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" data-icon="do_not_disturb_on">do_not_disturb_on</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">โหมดห้ามรบกวน</h4>
+<p class="text-xs text-on-surface-variant">ปิดการแจ้งเตือนในช่วงเวลาที่กำหนด</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<div class="pt-10 flex flex-col sm:flex-row items-center justify-between gap-6 opacity-60">
+<div class="flex items-center gap-8 text-[10px] uppercase tracking-widest font-bold">
+<a class="hover:text-primary transition-colors" href="#">ข้อตกลงการใช้งาน</a>
+<a class="hover:text-primary transition-colors" href="#">นโยบายความเป็นส่วนตัว</a>
+<a class="hover:text-primary transition-colors" href="#">ศูนย์ความช่วยเหลือ</a>
+</div>
+<p class="text-xs font-medium text-on-surface-variant">Chronos v2.4.0 — Made with Intent</p>
+</div>
+</div>
+</main>
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-950/40 backdrop-blur-lg border-t border-white/5 px-4 py-3 flex justify-around items-center">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined" data-icon="today">today</span>
+<span class="text-[10px] font-medium">วันนี้</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-[10px] font-medium">ปฏิทิน</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined" data-icon="format_list_bulleted">format_list_bulleted</span>
+<span class="text-[10px] font-medium">งาน</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="text-[10px] font-medium">สถิติ</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-blue-300" href="#">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="text-[10px] font-bold">ตั้งค่า</span>
+</a>
+</nav>
+<button class="fixed bottom-24 right-8 w-14 h-14 rounded-lg main-gradient-bg shadow-[0_32px_32px_rgba(105,156,255,0.08)] flex items-center justify-center text-on-primary-container group md:bottom-8 z-40 transition-all hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-2xl" data-icon="add">add</span>
+</button>
+</body></html>
