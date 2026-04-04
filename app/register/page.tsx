@@ -27,8 +27,7 @@ export default function RegisterPage() {
       return;
     }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 500));
-    const success = register(name, email, password);
+    const success = await register(name, email, password);
     setLoading(false);
     if (success) {
       router.push("/");

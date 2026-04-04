@@ -3,12 +3,13 @@
 import { useState, useEffect, createContext, useContext, type ReactNode } from "react";
 import type { Task, Note, Settings, UserProfile } from "../lib/types";
 import { defaultSettings, defaultUserProfile } from "../lib/mock-data";
+import * as api from "../lib/api";
 
 interface AuthState {
   isAuthenticated: boolean;
   user: { name: string; email: string } | null;
-  login: (email: string, password: string) => boolean;
-  register: (name: string, email: string, password: string) => boolean;
+  login: (email: string, password: string) => Promise<boolean>;
+  register: (name: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -41,88 +42,117 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [showAddTask, setShowAddTask] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const savedAuth = localStorage.getItem("plannerzeed-auth");
-    if (savedAuth) {
-      const auth = JSON.parse(savedAuth);
+    const userId = localStorage.getItem("plannerzeed-user-id");
+    if (userId) {
       setIsAuthenticated(true);
-      setUser(auth);
+      loadData();
+    } else {
+      setLoading(false);
     }
-    const savedTasks = localStorage.getItem("plannerzeed-tasks");
-    const savedNotes = localStorage.getItem("plannerzeed-notes");
-    const savedSettings = localStorage.getItem("plannerzeed-settings");
-    const savedProfile = localStorage.getItem("plannerzeed-profile");
-    if (savedTasks) setTasks(JSON.parse(savedTasks));
-    if (savedNotes) setNotes(JSON.parse(savedNotes));
-    if (savedSettings) setSettings(JSON.parse(savedSettings));
-    if (savedProfile) setProfile(JSON.parse(savedProfile));
   }, []);
 
-  useEffect(() => { localStorage.setItem("plannerzeed-tasks", JSON.stringify(tasks)); }, [tasks]);
-  useEffect(() => { localStorage.setItem("plannerzeed-notes", JSON.stringify(notes)); }, [notes]);
-  useEffect(() => { localStorage.setItem("plannerzeed-settings", JSON.stringify(settings)); }, [settings]);
-  useEffect(() => { localStorage.setItem("plannerzeed-profile", JSON.stringify(profile)); }, [profile]);
+  const loadData = async () => {
+    try {
+      const [tasksData, notesData, settingsData, profileData] = await Promise.all([
+        api.apiGetTasks(),
+        api.apiGetNotes(),
+        api.apiGetSettings(),
+        api.apiGetProfile(),
+      ]);
+      if (tasksData) setTasks(tasksData);
+      if (notesData) setNotes(notesData);
+      if (settingsData) setSettings(settingsData);
+      if (profileData) {
+        setUser({ name: profileData.name, email: profileData.email });
+        setProfile(prev => ({ ...prev, name: profileData.name, email: profileData.email }));
+      }
+    } catch (e) {
+      console.error("Failed to load data:", e);
+    }
+    setLoading(false);
+  };
 
-  const login = (email: string, password: string) => {
-    const users = JSON.parse(localStorage.getItem("plannerzeed-users") || "[]");
-    const found = users.find((u: { email: string; password: string }) => u.email === email && u.password === password);
-    if (found) {
+  const login = async (email: string, password: string) => {
+    const data = await api.apiLogin(email, password);
+    if (data) {
       setIsAuthenticated(true);
-      setUser({ name: found.name, email: found.email });
-      localStorage.setItem("plannerzeed-auth", JSON.stringify({ name: found.name, email: found.email }));
+      setUser({ name: data.name, email: data.email });
+      setProfile(prev => ({ ...prev, name: data.name, email: data.email }));
+      loadData();
       return true;
     }
     return false;
   };
 
-  const register = (name: string, email: string, password: string) => {
-    const users = JSON.parse(localStorage.getItem("plannerzeed-users") || "[]");
-    if (users.find((u: { email: string }) => u.email === email)) return false;
-    users.push({ name, email, password });
-    localStorage.setItem("plannerzeed-users", JSON.stringify(users));
-    setIsAuthenticated(true);
-    setUser({ name, email });
-    localStorage.setItem("plannerzeed-auth", JSON.stringify({ name, email }));
-    return true;
+  const register = async (name: string, email: string, password: string) => {
+    const data = await api.apiRegister(name, email, password);
+    if (data) {
+      setIsAuthenticated(true);
+      setUser({ name: data.name, email: data.email });
+      setProfile(prev => ({ ...prev, name: data.name, email: data.email }));
+      return true;
+    }
+    return false;
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
-    localStorage.removeItem("plannerzeed-auth");
+    setTasks([]);
+    setNotes([]);
+    localStorage.removeItem("plannerzeed-user-id");
   };
 
-  const toggleTask = (id: string) => {
+  const toggleTask = async (id: string) => {
+    const task = tasks.find(t => t.id === id);
+    if (!task) return;
     setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+    await api.apiToggleTask(id, !task.completed);
   };
 
-  const addTask = (task: Omit<Task, "id" | "completed">) => {
-    setTasks(prev => [...prev, { ...task, id: Date.now().toString(), completed: false }]);
+  const addTask = async (task: Omit<Task, "id" | "completed">) => {
+    const newTask = await api.apiCreateTask(task);
+    if (newTask) {
+      setTasks(prev => [...prev, { ...newTask, completed: false }]);
+    }
   };
 
-  const deleteTask = (id: string) => {
+  const deleteTask = async (id: string) => {
     setTasks(prev => prev.filter(t => t.id !== id));
+    await api.apiDeleteTask(id);
   };
 
-  const updateNote = (id: string, updates: Partial<Note>) => {
+  const updateNote = async (id: string, updates: Partial<Note>) => {
     setNotes(prev => prev.map(n => n.id === id ? { ...n, ...updates, updatedAt: "เพิ่งแก้ไข" } : n));
+    await api.apiUpdateNote(id, updates);
   };
 
-  const addNote = (note: Omit<Note, "id" | "updatedAt">) => {
-    setNotes(prev => [{ ...note, id: Date.now().toString(), updatedAt: "เพิ่งสร้าง" }, ...prev]);
+  const addNote = async (note: Omit<Note, "id" | "updatedAt">) => {
+    const newNote = await api.apiCreateNote(note);
+    if (newNote) {
+      setNotes(prev => [{ ...newNote, updatedAt: "เพิ่งสร้าง" }, ...prev]);
+    }
   };
 
-  const deleteNote = (id: string) => {
+  const deleteNote = async (id: string) => {
     setNotes(prev => prev.filter(n => n.id !== id));
+    await api.apiDeleteNote(id);
   };
 
-  const updateSettings = (updates: Partial<Settings>) => {
+  const updateSettings = async (updates: Partial<Settings>) => {
     setSettings(prev => ({ ...prev, ...updates }));
+    await api.apiUpdateSettings(updates);
   };
 
-  const updateProfile = (updates: Partial<UserProfile>) => {
+  const updateProfile = async (updates: Partial<UserProfile>) => {
     setProfile(prev => ({ ...prev, ...updates }));
+    const result = await api.apiUpdateProfile(updates);
+    if (result) {
+      setUser({ name: result.name, email: result.email });
+    }
   };
 
   return (
@@ -134,7 +164,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       updateSettings, updateProfile,
       isAuthenticated, user, login, register, logout,
     }}>
-      {children}
+      {loading ? (
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : (
+        children
+      )}
     </AppContext.Provider>
   );
 }
