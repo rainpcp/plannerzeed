@@ -6,9 +6,10 @@ import BottomNavBar from "../components/bottom-nav";
 import FAB from "../components/fab";
 import AddTaskModal from "../components/add-task-modal";
 import TaskDetailModal from "../components/task-detail-modal";
+import AuthGuard from "../components/auth-guard";
 import { useApp } from "../context";
 
-export default function CalendarPage() {
+function CalendarContent() {
   const { tasks, toggleTask } = useApp();
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -263,5 +264,13 @@ export default function CalendarPage() {
       <AddTaskModal />
       <TaskDetailModal taskId={selectedTaskId} onClose={() => setSelectedTaskId(null)} />
     </div>
+  );
+}
+
+export default function CalendarPage() {
+  return (
+    <AuthGuard>
+      <CalendarContent />
+    </AuthGuard>
   );
 }

@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useApp } from "../context";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { user, logout } = useApp();
 
   const links = [
     { href: "/", icon: "today", label: "ภาพรวมวันนี้" },
@@ -13,6 +15,9 @@ export default function Sidebar() {
     { href: "/notes", icon: "sticky_note_2", label: "บันทึก" },
     { href: "/settings", icon: "settings", label: "ตั้งค่า" },
   ];
+
+  const userName = user?.name || "ผู้ใช้";
+  const userInitial = userName.charAt(0).toUpperCase();
 
   return (
     <aside className="hidden md:flex flex-col gap-y-2 p-6 h-screen w-72 fixed left-0 top-0 bg-[#091328]/80 backdrop-blur-xl border-r border-white/5 z-50">
@@ -43,12 +48,19 @@ export default function Sidebar() {
       </nav>
       <div className="mt-auto pt-6 border-t border-white/5 flex items-center gap-3 px-2">
         <div className="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest flex items-center justify-center text-on-surface-variant text-sm font-bold">
-          T
+          {userInitial}
         </div>
-        <div>
-          <p className="text-sm font-bold text-on-surface">ธีรภัทร์</p>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-bold text-on-surface truncate">{userName}</p>
           <p className="text-[10px] text-on-surface-variant uppercase tracking-wider">Pro Plan</p>
         </div>
+        <button
+          onClick={logout}
+          className="p-2 text-on-surface-variant hover:text-error transition-colors"
+          title="ออกจากระบบ"
+        >
+          <span className="material-symbols-outlined text-lg">logout</span>
+        </button>
       </div>
     </aside>
   );

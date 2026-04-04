@@ -5,9 +5,10 @@ import Sidebar from "../components/sidebar";
 import BottomNavBar from "../components/bottom-nav";
 import FAB from "../components/fab";
 import AddTaskModal from "../components/add-task-modal";
+import AuthGuard from "../components/auth-guard";
 import { useApp } from "../context";
 
-export default function NotesPage() {
+function NotesContent() {
   const { notes, updateNote, addNote, deleteNote } = useApp();
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
@@ -167,5 +168,13 @@ export default function NotesPage() {
       <FAB />
       <AddTaskModal />
     </div>
+  );
+}
+
+export default function NotesPage() {
+  return (
+    <AuthGuard>
+      <NotesContent />
+    </AuthGuard>
   );
 }

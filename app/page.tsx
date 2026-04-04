@@ -7,9 +7,10 @@ import BottomNavBar from "./components/bottom-nav";
 import FAB from "./components/fab";
 import AddTaskModal from "./components/add-task-modal";
 import TaskDetailModal from "./components/task-detail-modal";
+import AuthGuard from "./components/auth-guard";
 import { useApp } from "./context";
 
-export default function Home() {
+function HomeContent() {
   const { tasks, toggleTask } = useApp();
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const completedCount = tasks.filter(t => t.completed).length;
@@ -223,5 +224,13 @@ export default function Home() {
       <div className="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
       <div className="fixed bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <AuthGuard>
+      <HomeContent />
+    </AuthGuard>
   );
 }

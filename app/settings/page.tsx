@@ -4,12 +4,13 @@ import { useState } from "react";
 import Sidebar from "../components/sidebar";
 import BottomNavBar from "../components/bottom-nav";
 import FAB from "../components/fab";
+import AuthGuard from "../components/auth-guard";
 import { useApp } from "../context";
 
-export default function SettingsPage() {
-  const { settings, profile, updateSettings, updateProfile } = useApp();
-  const [name, setName] = useState(profile.name);
-  const [email, setEmail] = useState(profile.email);
+function SettingsContent() {
+  const { settings, profile, updateSettings, updateProfile, user, logout } = useApp();
+  const [name, setName] = useState(user?.name || profile.name);
+  const [email, setEmail] = useState(user?.email || profile.email);
   const [saved, setSaved] = useState(false);
 
   const handleSaveProfile = () => {
@@ -230,5 +231,13 @@ export default function SettingsPage() {
       <BottomNavBar />
       <FAB />
     </div>
+  );
+}
+
+export default function SettingsPage() {
+  return (
+    <AuthGuard>
+      <SettingsContent />
+    </AuthGuard>
   );
 }

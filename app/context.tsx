@@ -4,6 +4,14 @@ import { useState, useEffect, createContext, useContext, type ReactNode } from "
 import type { Task, Note, Settings, UserProfile } from "../lib/types";
 import { defaultSettings, defaultUserProfile } from "../lib/mock-data";
 
+interface AuthState {
+  isAuthenticated: boolean;
+  user: { name: string; email: string } | null;
+  login: (email: string, password: string) => boolean;
+  register: (name: string, email: string, password: string) => boolean;
+  logout: () => void;
+}
+
 interface AppState {
   tasks: Task[];
   notes: Note[];
@@ -21,7 +29,9 @@ interface AppState {
   updateProfile: (updates: Partial<UserProfile>) => void;
 }
 
-const AppContext = createContext<AppState | null>(null);
+type AppContextType = AppState & AuthState;
+
+const AppContext = createContext<AppContextType | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -29,8 +39,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<Settings>(defaultSettings);
   const [profile, setProfile] = useState<UserProfile>(defaultUserProfile);
   const [showAddTask, setShowAddTask] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
   useEffect(() => {
+    const savedAuth = localStorage.getItem("plannerzeed-auth");
+    if (savedAuth) {
+      const auth = JSON.parse(savedAuth);
+      setIsAuthenticated(true);
+      setUser(auth);
+    }
     const savedTasks = localStorage.getItem("plannerzeed-tasks");
     const savedNotes = localStorage.getItem("plannerzeed-notes");
     const savedSettings = localStorage.getItem("plannerzeed-settings");
@@ -45,6 +63,35 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => { localStorage.setItem("plannerzeed-notes", JSON.stringify(notes)); }, [notes]);
   useEffect(() => { localStorage.setItem("plannerzeed-settings", JSON.stringify(settings)); }, [settings]);
   useEffect(() => { localStorage.setItem("plannerzeed-profile", JSON.stringify(profile)); }, [profile]);
+
+  const login = (email: string, password: string) => {
+    const users = JSON.parse(localStorage.getItem("plannerzeed-users") || "[]");
+    const found = users.find((u: { email: string; password: string }) => u.email === email && u.password === password);
+    if (found) {
+      setIsAuthenticated(true);
+      setUser({ name: found.name, email: found.email });
+      localStorage.setItem("plannerzeed-auth", JSON.stringify({ name: found.name, email: found.email }));
+      return true;
+    }
+    return false;
+  };
+
+  const register = (name: string, email: string, password: string) => {
+    const users = JSON.parse(localStorage.getItem("plannerzeed-users") || "[]");
+    if (users.find((u: { email: string }) => u.email === email)) return false;
+    users.push({ name, email, password });
+    localStorage.setItem("plannerzeed-users", JSON.stringify(users));
+    setIsAuthenticated(true);
+    setUser({ name, email });
+    localStorage.setItem("plannerzeed-auth", JSON.stringify({ name, email }));
+    return true;
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    localStorage.removeItem("plannerzeed-auth");
+  };
 
   const toggleTask = (id: string) => {
     setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
@@ -85,6 +132,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       toggleTask, addTask, deleteTask,
       updateNote, addNote, deleteNote,
       updateSettings, updateProfile,
+      isAuthenticated, user, login, register, logout,
     }}>
       {children}
     </AppContext.Provider>
