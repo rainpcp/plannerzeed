@@ -1,8 +1,23 @@
+"use client";
+
+import { useState } from "react";
 import Sidebar from "../components/sidebar";
 import BottomNavBar from "../components/bottom-nav";
 import FAB from "../components/fab";
+import { useApp } from "../context";
 
 export default function SettingsPage() {
+  const { settings, profile, updateSettings, updateProfile } = useApp();
+  const [name, setName] = useState(profile.name);
+  const [email, setEmail] = useState(profile.email);
+  const [saved, setSaved] = useState(false);
+
+  const handleSaveProfile = () => {
+    updateProfile({ name, email });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
   return (
     <div className="bg-surface-dim text-on-surface antialiased min-h-screen">
       <Sidebar />
@@ -28,7 +43,9 @@ export default function SettingsPage() {
             <div className="lg:col-span-8 glass-panel p-8 rounded-lg space-y-8">
               <div className="flex flex-col sm:flex-row items-center gap-8">
                 <div className="relative group">
-                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/20 group-hover:border-primary/50 transition-all bg-surface-container-highest flex items-center justify-center text-2xl font-bold text-on-surface-variant">T</div>
+                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/20 group-hover:border-primary/50 transition-all bg-surface-container-highest flex items-center justify-center text-2xl font-bold text-on-surface-variant">
+                    {profile.avatar}
+                  </div>
                   <button className="absolute bottom-0 right-0 main-gradient-bg w-8 h-8 rounded-full flex items-center justify-center shadow-lg border-2 border-surface-dim">
                     <span className="material-symbols-outlined text-xs text-on-primary">edit</span>
                   </button>
@@ -37,17 +54,33 @@ export default function SettingsPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <label className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">ชื่อผู้ใช้</label>
-                      <input className="w-full bg-surface-container-low border-none rounded-md px-4 py-2 text-sm focus:ring-1 focus:ring-primary/40" type="text" defaultValue="ธีรภัทร์" />
+                      <input
+                        className="w-full bg-surface-container-low border-none rounded-md px-4 py-2 text-sm focus:ring-1 focus:ring-primary/40"
+                        type="text"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                      />
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">อีเมล</label>
-                      <input className="w-full bg-surface-container-low border-none rounded-md px-4 py-2 text-sm focus:ring-1 focus:ring-primary/40" type="email" defaultValue="teerapat@chronos.ai" />
+                      <input
+                        className="w-full bg-surface-container-low border-none rounded-md px-4 py-2 text-sm focus:ring-1 focus:ring-primary/40"
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end pt-4 border-t border-white/5">
-                <button className="px-6 py-2 rounded-full text-sm font-semibold text-primary hover:bg-primary/10 transition-colors">บันทึกการเปลี่ยนแปลง</button>
+              <div className="flex justify-end pt-4 border-t border-white/5 items-center gap-4">
+                {saved && <span className="text-sm text-primary">บันทึกสำเร็จ!</span>}
+                <button
+                  onClick={handleSaveProfile}
+                  className="px-6 py-2 rounded-full text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
+                >
+                  บันทึกการเปลี่ยนแปลง
+                </button>
               </div>
             </div>
           </section>
@@ -80,7 +113,9 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-primary font-bold uppercase tracking-widest mr-2">Connected</span>
+                  <span className={`text-[10px] font-bold uppercase tracking-widest mr-2 ${settings.cloudSync ? "text-primary" : "text-on-surface-variant"}`}>
+                    {settings.cloudSync ? "Connected" : "Disconnected"}
+                  </span>
                   <span className="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
                 </div>
               </div>
@@ -103,8 +138,33 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <div className="bg-surface-container-low p-1 rounded-full flex">
-                  <button className="px-4 py-1.5 rounded-full text-xs font-bold text-on-surface-variant hover:text-on-surface transition-all">สว่าง</button>
-                  <button className="px-4 py-1.5 rounded-full text-xs font-bold bg-primary text-on-primary-container shadow-md">มืด</button>
+                  <button
+                    onClick={() => updateSettings({ theme: "light" })}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                      settings.theme === "light" ? "bg-primary text-on-primary-container shadow-md" : "text-on-surface-variant hover:text-on-surface"
+                    }`}
+                  >สว่าง</button>
+                  <button
+                    onClick={() => updateSettings({ theme: "dark" })}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                      settings.theme === "dark" ? "bg-primary text-on-primary-container shadow-md" : "text-on-surface-variant hover:text-on-surface"
+                    }`}
+                  >มืด</button>
+                </div>
+              </div>
+              <div className="pt-6 border-t border-white/5 space-y-4">
+                <h5 className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">โทนสีหลัก</h5>
+                <div className="flex gap-4">
+                  {["#85adff", "#ac8aff", "#8ce7ff", "#ff716c"].map(color => (
+                    <button
+                      key={color}
+                      onClick={() => updateSettings({ accentColor: color })}
+                      className={`w-8 h-8 rounded-full transition-all ${
+                        settings.accentColor === color ? "ring-2 ring-offset-2 ring-offset-surface ring-primary" : ""
+                      }`}
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -126,8 +186,13 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
-                  <input className="sr-only peer" type="checkbox" defaultChecked />
-                  <div className="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                  <input
+                    className="sr-only peer"
+                    type="checkbox"
+                    checked={settings.pushNotifications}
+                    onChange={() => updateSettings({ pushNotifications: !settings.pushNotifications })}
+                  />
+                  <div className="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                 </label>
               </div>
               <div className="glass-panel p-6 rounded-lg flex items-center justify-between">
@@ -141,12 +206,25 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
-                  <input className="sr-only peer" type="checkbox" />
-                  <div className="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                  <input
+                    className="sr-only peer"
+                    type="checkbox"
+                    checked={settings.doNotDisturb}
+                    onChange={() => updateSettings({ doNotDisturb: !settings.doNotDisturb })}
+                  />
+                  <div className="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                 </label>
               </div>
             </div>
           </section>
+          <div className="pt-10 flex flex-col sm:flex-row items-center justify-between gap-6 opacity-60">
+            <div className="flex items-center gap-8 text-[10px] uppercase tracking-widest font-bold">
+              <a className="hover:text-primary transition-colors" href="#">ข้อตกลงการใช้งาน</a>
+              <a className="hover:text-primary transition-colors" href="#">นโยบายความเป็นส่วนตัว</a>
+              <a className="hover:text-primary transition-colors" href="#">ศูนย์ความช่วยเหลือ</a>
+            </div>
+            <p className="text-xs font-medium text-on-surface-variant">Chronos v2.4.0 — Made with Intent</p>
+          </div>
         </div>
       </main>
       <BottomNavBar />
