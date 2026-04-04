@@ -11,12 +11,10 @@
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
     "@fontsource/plus-jakarta-sans": "^5.2.8",
-    "@hono/zod-validator": "^0.7.6",
-    "hono": "^4.12.10",
     "next": "16.2.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "zod": "^4.3.6"
+    "sql.js": "^1.14.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -26,8 +24,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "wrangler": "^4.80.0"
+    "typescript": "^5"
   },
   "ignoreScripts": [
     "sharp",
