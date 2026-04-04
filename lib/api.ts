@@ -1,3 +1,5 @@
+const API_BASE = "https://plannerzeed-api.phuangchomphurobchanachai.workers.dev";
+
 function getHeaders() {
   const userId = typeof window !== "undefined" ? localStorage.getItem("plannerzeed-user-id") : null;
   const headers: Record<string, string> = { "Content-Type": "application/json" };
@@ -6,7 +8,7 @@ function getHeaders() {
 }
 
 async function fetchApi(path: string, options?: RequestInit) {
-  const res = await fetch(path, { ...options, headers: { ...getHeaders(), ...options?.headers } });
+  const res = await fetch(`${API_BASE}${path}`, { ...options, headers: { ...getHeaders(), ...options?.headers } });
   return res;
 }
 
