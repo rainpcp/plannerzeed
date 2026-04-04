@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@import "tailwindcss";
+
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "@fontsource/plus-jakarta-sans/800.css";
+@import "@fontsource/inter/300.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+@theme inline {
+  --color-primary: #85adff;
+  --color-primary-dim: #699cff;
+  --color-primary-container: #6e9fff;
+  --color-primary-fixed: #6e9fff;
+  --color-primary-fixed-dim: #5391ff;
+  --color-on-primary: #002c66;
+  --color-on-primary-container: #002150;
+
+  --color-secondary: #ac8aff;
+  --color-secondary-dim: #8455ef;
+  --color-secondary-container: #5516be;
+  --color-secondary-fixed: #dac9ff;
+  --color-secondary-fixed-dim: #ceb9ff;
+  --color-on-secondary: #280067;
+  --color-on-secondary-container: #d9c8ff;
+
+  --color-tertiary: #8ce7ff;
+  --color-tertiary-dim: #40ceed;
+  --color-tertiary-container: #53ddfc;
+  --color-tertiary-fixed: #53ddfc;
+  --color-tertiary-fixed-dim: #40ceed;
+  --color-on-tertiary: #005464;
+  --color-on-tertiary-container: #004b58;
+
+  --color-surface: #060e20;
+  --color-surface-dim: #060e20;
+  --color-surface-bright: #1f2b49;
+  --color-surface-container: #0f1930;
+  --color-surface-container-low: #091328;
+  --color-surface-container-lowest: #000000;
+  --color-surface-container-high: #141f38;
+  --color-surface-container-highest: #192540;
+  --color-surface-variant: #192540;
+
+  --color-background: #060e20;
+  --color-on-background: #dee5ff;
+  --color-on-surface: #dee5ff;
+  --color-on-surface-variant: #a3aac4;
+  --color-inverse-surface: #faf8ff;
+  --color-inverse-on-surface: #4d556b;
+  --color-inverse-primary: #005bc4;
+
+  --color-outline: #6d758c;
+  --color-outline-variant: #40485d;
+
+  --color-error: #ff716c;
+  --color-error-dim: #d7383b;
+  --color-error-container: #9f0519;
+  --color-on-error: #490006;
+  --color-on-error-container: #ffa8a3;
+
+  --radius: 1rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+
+  --font-headline: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #060e20;
+  color: #dee5ff;
+  font-family: 'Inter', sans-serif;
+}
+
+.font-headline { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.glass-panel {
+  background: rgba(25, 37, 64, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.main-gradient-bg {
+  background: linear-gradient(135deg, #85adff 0%, #ac8aff 100%);
+}
