@@ -7,4 +7,4 @@ database_name = "plannerzeed"
 database_id = "613ff7ac-1b34-4139-9935-8784867f3295"
 
 [assets]
-directory = ".open-next/cloudflare/assets"
+directory = ".open-next/assets"
