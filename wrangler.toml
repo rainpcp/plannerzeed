@@ -1,0 +1,7 @@
+name = "plannerzeed"
+compatibility_date = "2026-04-04"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "plannerzeed"
+database_id = "613ff7ac-1b34-4139-9935-8784867f3295"
