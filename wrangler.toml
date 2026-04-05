@@ -5,3 +5,6 @@ compatibility_date = "2026-04-04"
 binding = "DB"
 database_name = "plannerzeed"
 database_id = "613ff7ac-1b34-4139-9935-8784867f3295"
+
+[assets]
+directory = ".open-next/cloudflare/assets"
