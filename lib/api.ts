@@ -1,117 +1,171 @@
-const API_BASE = "https://plannerzeed-api.phuangchomphurobchanachai.workers.dev";
-
-function getHeaders() {
-  const userId = typeof window !== "undefined" ? localStorage.getItem("plannerzeed-user-id") : null;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (userId) headers["x-user-id"] = userId;
-  return headers;
-}
+import pool from "./d1";
 
 async function fetchApi(path: string, options?: RequestInit) {
-  const res = await fetch(`${API_BASE}${path}`, { ...options, headers: { ...getHeaders(), ...options?.headers } });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE || ""}${path}`, { ...options, headers: { "Content-Type": "application/json", ...options?.headers } });
   return res;
 }
 
 export async function apiLogin(email: string, password: string) {
-  const res = await fetchApi("/api/auth/login", {
-    method: "POST",
-    body: JSON.stringify({ email, password }),
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  if (typeof window !== "undefined") localStorage.setItem("plannerzeed-user-id", data.id);
-  return data;
+  const result = await pool.query<{ id: string; name: string; email: string }>(
+    "SELECT id, name, email FROM users WHERE email = ? AND password_hash = ?",
+    [email, password]
+  );
+  if (result.rows.length === 0) return null;
+  return result.rows[0];
 }
 
 export async function apiRegister(name: string, email: string, password: string) {
-  const res = await fetchApi("/api/auth/register", {
-    method: "POST",
-    body: JSON.stringify({ name, email, password }),
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  if (typeof window !== "undefined") localStorage.setItem("plannerzeed-user-id", data.id);
-  return data;
+  const existing = await pool.query("SELECT id FROM users WHERE email = ?", [email]);
+  if (existing.rows.length > 0) return null;
+  const id = crypto.randomUUID();
+  await pool.query(
+    "INSERT INTO users (id, name, email, password_hash) VALUES (?, ?, ?, ?)",
+    [id, name, email, password]
+  );
+  await pool.query(
+    "INSERT INTO settings (id, user_id) VALUES (?, ?)",
+    [crypto.randomUUID(), id]
+  );
+  return { id, name, email };
 }
 
-export async function apiGetTasks() {
-  const res = await fetchApi("/api/tasks");
-  if (!res.ok) return [];
-  return res.json();
+export async function apiGetTasks(userId?: string) {
+  if (!userId) return [];
+  const result = await pool.query(
+    "SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC",
+    [userId]
+  );
+  return result.rows.map((t: any) => ({
+    id: t.id, title: t.title, description: t.description, category: t.category,
+    priority: t.priority, date: t.date, time: t.time, endTime: t.end_time,
+    completed: !!t.completed, icon: t.icon, color: t.color,
+  }));
 }
 
-export async function apiCreateTask(task: any) {
-  const res = await fetchApi("/api/tasks", {
-    method: "POST",
-    body: JSON.stringify(task),
-  });
-  return res.json();
+export async function apiCreateTask(task: any, userId?: string) {
+  if (!userId) return null;
+  const id = crypto.randomUUID();
+  await pool.query(
+    "INSERT INTO tasks (id, user_id, title, description, category, priority, date, time, end_time, icon, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [id, userId, task.title, task.description || null, task.category, task.priority, task.date || null, task.time || null, task.endTime || null, task.icon || "task", task.color || "primary"]
+  );
+  return { id, ...task, completed: false };
 }
 
-export async function apiToggleTask(id: string, completed: boolean) {
-  const res = await fetchApi(`/api/tasks/${id}`, {
-    method: "PUT",
-    body: JSON.stringify({ completed }),
-  });
-  return res.json();
+export async function apiToggleTask(id: string, completed: boolean, userId?: string) {
+  if (!userId) return null;
+  await pool.query(
+    "UPDATE tasks SET completed = ?, updated_at = datetime('now') WHERE id = ? AND user_id = ?",
+    [completed ? 1 : 0, id, userId]
+  );
+  return { success: true };
 }
 
-export async function apiDeleteTask(id: string) {
-  const res = await fetchApi(`/api/tasks/${id}`, { method: "DELETE" });
-  return res.json();
+export async function apiDeleteTask(id: string, userId?: string) {
+  if (!userId) return null;
+  await pool.query("DELETE FROM tasks WHERE id = ? AND user_id = ?", [id, userId]);
+  return { success: true };
 }
 
-export async function apiGetNotes() {
-  const res = await fetchApi("/api/notes");
-  if (!res.ok) return [];
-  return res.json();
+export async function apiGetNotes(userId?: string) {
+  if (!userId) return [];
+  const result = await pool.query(
+    "SELECT * FROM notes WHERE user_id = ? ORDER BY updated_at DESC",
+    [userId]
+  );
+  return result.rows.map((n: any) => ({
+    id: n.id, title: n.title, content: n.content, category: n.category,
+    color: n.color, updatedAt: n.updated_at, isFavorite: !!n.is_favorite,
+  }));
 }
 
-export async function apiCreateNote(note: any) {
-  const res = await fetchApi("/api/notes", {
-    method: "POST",
-    body: JSON.stringify(note),
-  });
-  return res.json();
+export async function apiCreateNote(note: any, userId?: string) {
+  if (!userId) return null;
+  const id = crypto.randomUUID();
+  await pool.query(
+    "INSERT INTO notes (id, user_id, title, content, category, color, is_favorite) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    [id, userId, note.title, note.content || null, note.category, note.color, note.isFavorite ? 1 : 0]
+  );
+  return { id, ...note, updatedAt: new Date().toISOString() };
 }
 
-export async function apiUpdateNote(id: string, updates: any) {
-  const res = await fetchApi(`/api/notes/${id}`, {
-    method: "PUT",
-    body: JSON.stringify(updates),
-  });
-  return res.json();
+export async function apiUpdateNote(id: string, updates: any, userId?: string) {
+  if (!userId) return null;
+  const fields: string[] = [];
+  const values: any[] = [];
+  if (updates.title) { fields.push("title = ?"); values.push(updates.title); }
+  if (updates.content !== undefined) { fields.push("content = ?"); values.push(updates.content); }
+  if (updates.category) { fields.push("category = ?"); values.push(updates.category); }
+  if (updates.color) { fields.push("color = ?"); values.push(updates.color); }
+  if (updates.isFavorite !== undefined) { fields.push("is_favorite = ?"); values.push(updates.isFavorite ? 1 : 0); }
+  fields.push("updated_at = datetime('now')");
+  values.push(id, userId);
+  if (fields.length > 1) {
+    await pool.query(`UPDATE notes SET ${fields.join(", ")} WHERE id = ? AND user_id = ?`, values);
+  }
+  return { success: true };
 }
 
-export async function apiDeleteNote(id: string) {
-  const res = await fetchApi(`/api/notes/${id}`, { method: "DELETE" });
-  return res.json();
+export async function apiDeleteNote(id: string, userId?: string) {
+  if (!userId) return null;
+  await pool.query("DELETE FROM notes WHERE id = ? AND user_id = ?", [id, userId]);
+  return { success: true };
 }
 
-export async function apiGetSettings() {
-  const res = await fetchApi("/api/settings");
-  if (!res.ok) return { pushNotifications: true, doNotDisturb: false, theme: "dark", accentColor: "#85adff", cloudSync: false };
-  return res.json();
+export async function apiGetSettings(userId?: string) {
+  if (!userId) return { pushNotifications: true, doNotDisturb: false, theme: "dark", accentColor: "#85adff", cloudSync: false };
+  const result = await pool.query("SELECT * FROM settings WHERE user_id = ?", [userId]);
+  const settings = result.rows[0];
+  if (!settings) return { pushNotifications: true, doNotDisturb: false, theme: "dark", accentColor: "#85adff", cloudSync: false };
+  return {
+    pushNotifications: !!settings.push_notifications,
+    doNotDisturb: !!settings.do_not_disturb,
+    theme: settings.theme,
+    accentColor: settings.accent_color,
+    cloudSync: !!settings.cloud_sync,
+  };
 }
 
-export async function apiUpdateSettings(updates: any) {
-  const res = await fetchApi("/api/settings", {
-    method: "PUT",
-    body: JSON.stringify(updates),
-  });
-  return res.json();
+export async function apiUpdateSettings(updates: any, userId?: string) {
+  if (!userId) return null;
+  const existing = await pool.query("SELECT id FROM settings WHERE user_id = ?", [userId]);
+  if (existing.rows.length > 0) {
+    const fields: string[] = [];
+    const values: any[] = [];
+    if (updates.pushNotifications !== undefined) { fields.push("push_notifications = ?"); values.push(updates.pushNotifications ? 1 : 0); }
+    if (updates.doNotDisturb !== undefined) { fields.push("do_not_disturb = ?"); values.push(updates.doNotDisturb ? 1 : 0); }
+    if (updates.theme) { fields.push("theme = ?"); values.push(updates.theme); }
+    if (updates.accentColor) { fields.push("accent_color = ?"); values.push(updates.accentColor); }
+    if (updates.cloudSync !== undefined) { fields.push("cloud_sync = ?"); values.push(updates.cloudSync ? 1 : 0); }
+    if (fields.length > 0) {
+      fields.push("updated_at = datetime('now')");
+      values.push(userId);
+      await pool.query(`UPDATE settings SET ${fields.join(", ")} WHERE user_id = ?`, values);
+    }
+  } else {
+    const id = crypto.randomUUID();
+    await pool.query(
+      "INSERT INTO settings (id, user_id, push_notifications, do_not_disturb, theme, accent_color, cloud_sync) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [id, userId, updates.pushNotifications ? 1 : 0, updates.doNotDisturb ? 1 : 0, updates.theme || "dark", updates.accentColor || "#85adff", updates.cloudSync ? 1 : 0]
+    );
+  }
+  return { success: true };
 }
 
-export async function apiGetProfile() {
-  const res = await fetchApi("/api/profile");
-  if (!res.ok) return null;
-  return res.json();
+export async function apiGetProfile(userId?: string) {
+  if (!userId) return null;
+  const result = await pool.query("SELECT id, name, email FROM users WHERE id = ?", [userId]);
+  return result.rows[0] || null;
 }
 
-export async function apiUpdateProfile(updates: any) {
-  const res = await fetchApi("/api/profile", {
-    method: "PUT",
-    body: JSON.stringify(updates),
-  });
-  return res.json();
+export async function apiUpdateProfile(updates: any, userId?: string) {
+  if (!userId) return null;
+  if (updates.name || updates.email) {
+    await pool.query(
+      "UPDATE users SET name = COALESCE(?, name), email = COALESCE(?, email), updated_at = datetime('now') WHERE id = ?",
+      [updates.name || null, updates.email || null, userId]
+    );
+  }
+  const result = await pool.query("SELECT id, name, email FROM users WHERE id = ?", [userId]);
+  return result.rows[0] || null;
 }
