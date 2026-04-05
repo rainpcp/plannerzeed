@@ -78,6 +78,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string) => {
     const data = await api.apiLogin(email, password);
     if (data) {
+      localStorage.setItem("plannerzeed-user-id", data.id);
       setIsAuthenticated(true);
       setUser({ name: data.name, email: data.email });
       setProfile(prev => ({ ...prev, name: data.name, email: data.email }));
@@ -90,6 +91,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const register = async (name: string, email: string, password: string) => {
     const data = await api.apiRegister(name, email, password);
     if (data) {
+      localStorage.setItem("plannerzeed-user-id", data.id);
       setIsAuthenticated(true);
       setUser({ name: data.name, email: data.email });
       setProfile(prev => ({ ...prev, name: data.name, email: data.email }));
