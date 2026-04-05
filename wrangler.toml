@@ -1,9 +1,0 @@
-name = "plannerzeed"
-compatibility_date = "2024-01-01"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = "./out"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "plannerzeed"
-database_id = "613ff7ac-1b34-4139-9935-8784867f3295"
